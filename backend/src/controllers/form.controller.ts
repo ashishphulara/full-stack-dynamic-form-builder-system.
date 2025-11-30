@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { employeeOnboardingFormSchema } from "../schema/formSchema";
+import { employeeOnboardingFormSchema } from "../schema/formSchema.js";
 
 export const getFormSchema = (_req: Request, res: Response) => {
   res.status(200).json(employeeOnboardingFormSchema);

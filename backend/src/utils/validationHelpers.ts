@@ -1,4 +1,4 @@
-import { FormSchema } from "../schema/formSchema";
+import { FormSchema } from "../schema/formSchema.js";
 
 export interface ValidationErrors {
   [field: string]: string;

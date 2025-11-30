@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { employeeOnboardingFormSchema } from "../schema/formSchema";
+import { employeeOnboardingFormSchema } from "../schema/formSchema.js";
 import { createSubmission, getSubmissions } from "../services/submission.service";
 import { validateSubmission } from "../utils/validationHelpers";
 
