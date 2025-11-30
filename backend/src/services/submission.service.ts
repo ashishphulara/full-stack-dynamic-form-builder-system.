@@ -1,4 +1,4 @@
-import { submissions, Submission } from "../models/submission.model";
+import { submissions, Submission } from "../models/submission.model.js";
 import { v4 as uuid } from "uuid";
 
 export const createSubmission = (data: Record<string, any>): Submission => {

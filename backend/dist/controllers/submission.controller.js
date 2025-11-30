@@ -1,6 +1,6 @@
 import { employeeOnboardingFormSchema } from "../schema/formSchema.js";
-import { createSubmission, getSubmissions } from "../services/submission.service";
-import { validateSubmission } from "../utils/validationHelpers";
+import { createSubmission, getSubmissions } from "../services/submission.service.js";
+import { validateSubmission } from "../utils/validationHelpers.js";
 export const postSubmission = (req, res) => {
     const data = req.body;
     const errors = validateSubmission(employeeOnboardingFormSchema, data);
