@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "http://localhost:4000/api", // adjust for deployment
+  baseURL: "https://full-stack-dynamic-form-builder-system-1.onrender.com/api",
 });
