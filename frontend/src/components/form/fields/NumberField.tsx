@@ -7,7 +7,7 @@ interface Props {
   value: number | undefined;
   onChange: (val: number) => void;
   placeholder?: string;
-  fieldName?: string; // Add this for error clearing
+  // fieldName?: string; // Add this for error clearing
   clearError?: () => void; // Add this for error clearing
 }
 
@@ -18,7 +18,7 @@ const NumberField: React.FC<Props> = ({
   value,
   onChange,
   placeholder,
-  fieldName,
+  // fieldName,
   clearError,
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

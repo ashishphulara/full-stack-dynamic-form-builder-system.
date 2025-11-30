@@ -7,8 +7,8 @@ interface Props {
   value: string;
   onChange: (value: string) => void;
   options: { label: string; value: string }[];
-  fieldName?: string; // Add this
-  clearError?: () => void; // Add this
+  // fieldName?: string; 
+  clearError?: () => void; 
 }
 
 const SelectField: React.FC<Props> = ({
@@ -18,7 +18,7 @@ const SelectField: React.FC<Props> = ({
   value,
   onChange,
   options,
-  fieldName,
+  // fieldName,
   clearError,
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

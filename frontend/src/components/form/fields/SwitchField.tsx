@@ -6,7 +6,7 @@ interface Props {
   error?: string;
   value: boolean;
   onChange: (val: boolean) => void;
-  fieldName?: string; // Add this
+  // fieldName?: string; // Add this
   clearError?: () => void; // Add this
 }
 
@@ -16,7 +16,7 @@ const SwitchField: React.FC<Props> = ({
   error,
   value,
   onChange,
-  fieldName,
+  // fieldName,
   clearError,
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

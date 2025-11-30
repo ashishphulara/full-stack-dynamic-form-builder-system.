@@ -19,13 +19,13 @@ export interface ValidationRules {
   maxSelected?: number;
 }
 
-export interface FormField {
+interface FormField {
   name: string;
   label: string;
-  type: FieldType;
+  type: string;
+  validations?: { required?: boolean };
   placeholder?: string;
   options?: { label: string; value: string }[];
-  validations?: ValidationRules;
 }
 
 export interface FormSchema {

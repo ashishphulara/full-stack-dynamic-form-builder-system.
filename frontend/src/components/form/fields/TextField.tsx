@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 interface Props {
   label: string;
@@ -7,7 +7,7 @@ interface Props {
   value: string;
   onChange: (val: string) => void;
   placeholder?: string;
-  fieldName?: string; // Add this
+  // fieldName?: string; // Add this
   clearError?: () => void; // Add this
 }
 
@@ -18,7 +18,7 @@ const TextField: React.FC<Props> = ({
   value,
   onChange,
   placeholder,
-  fieldName,
+  // fieldName,
   clearError,
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

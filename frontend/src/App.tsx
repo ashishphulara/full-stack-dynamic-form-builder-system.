@@ -1,10 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FormPage from "./pages/FormPage";
 import SubmissionsPage from "./components/form/fields/SubmissionPage";
 import Header from "./components/layout/Header";

@@ -1,5 +1,11 @@
 import React from "react";
-import { useSubmissionsQuery } from "../../../api/submissionsApi";
+import { useSubmissionsQuery } from "../../../api/submissionsApi.js";
+
+// ✅ Define proper TypeScript interface
+interface SubmissionsResponse {
+  items: any[];
+  total: number;
+}
 
 const SubmissionsPage: React.FC = () => {
   const [page, setPage] = React.useState(1);
@@ -20,7 +26,8 @@ const SubmissionsPage: React.FC = () => {
     );
   }
 
-  if (isError || !data) {
+  // ✅ Type-safe data handling with optional chaining
+  if (isError || !data?.items || !data?.total) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#fef3ea]">
         <p className="text-red-600">Error loading submissions.</p>
@@ -28,7 +35,8 @@ const SubmissionsPage: React.FC = () => {
     );
   }
 
-  if (data.items.length === 0) {
+  // ✅ Safe empty check
+  if (data?.items.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#fef3ea]">
         <p className="text-slate-700">No submissions yet.</p>
@@ -36,14 +44,15 @@ const SubmissionsPage: React.FC = () => {
     );
   }
 
-  const totalPages = Math.max(1, Math.ceil(data.total / limit));
+  // ✅ Safe total calculation
+  const totalPages = Math.max(1, Math.ceil((data?.total || 0) / limit));
 
   return (
     <div className="min-h-screen bg-[#fef3ea] flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-4xl">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-xl font-semibold text-slate-900">
-            Submissions ({data.total})
+            Submissions ({data?.total || 0})
           </h1>
 
           <div className="flex items-center gap-3 text-sm">
@@ -77,12 +86,10 @@ const SubmissionsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* List of submissions – each as a card */}
+        {/* List of submissions */}
         <div className="space-y-4">
-          {data.items.map((item: any, index: number) => {
-            // Assume your backend returns the submitted payload
-            // either as item.data or directly on item.
-            const payload = item.data ?? item;
+          {data?.items.map((item: any, index: number) => {
+            const payload = item?.data ?? item;
 
             return (
               <div
@@ -106,7 +113,7 @@ const SubmissionsPage: React.FC = () => {
           })}
         </div>
 
-        {/* Pagination controls */}
+        {/* Pagination */}
         <div className="flex items-center justify-between mt-6 text-sm text-slate-700">
           <span>
             Page {page} of {totalPages}

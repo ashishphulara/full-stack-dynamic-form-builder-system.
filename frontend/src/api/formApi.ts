@@ -1,12 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "./client";
 
-export interface FormField {
-  /* mirror backend types */
-}
-export interface FormSchema {
-  /* mirror backend types */
-}
+type FormSchema = Record<string, any>;
+// type FormField = Record<string, any>;
 
 export const useFormSchemaQuery = () =>
   useQuery<FormSchema>({

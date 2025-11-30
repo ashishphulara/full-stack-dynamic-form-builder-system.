@@ -10,8 +10,28 @@ import SelectField from "./fields/SelectField";
 import MultiSelectField from "./fields/MultiSelectField";
 import TextareaField from "./fields/TextareaField";
 import SwitchField from "./fields/SwitchField";
-import DateField from "./fields/DateField";
+
 import { useNavigate } from "react-router-dom";
+import DateField from "./fields/DateField";
+
+// ✅ TYPE DEFINITIONS
+interface FormField {
+  name: string;
+  label: string;
+  type: string;
+  validations?: { required?: boolean };
+  placeholder?: string;
+  options?: Array<{ label: string; value: string }>;
+}
+
+interface FormSchema {
+  title: string;
+  fields: FormField[];
+}
+
+interface FormValues {
+  [key: string]: string | number | boolean | string[] | undefined | null;
+}
 
 //
 // DYNAMIC FORM
@@ -87,6 +107,7 @@ const DynamicForm: React.FC = () => {
     );
   }
 
+  // ✅ FIXED handleFormSubmit with proper typing
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -94,9 +115,9 @@ const DynamicForm: React.FC = () => {
 
     // Frontend validation
     const errors: Record<string, string> = {};
-    const formValues = form.state.values;
+    const formValues = form.state.values as FormValues;
 
-    schema.fields.forEach((field: any) => {
+    (schema as FormSchema).fields.forEach((field: FormField) => {
       const value = formValues[field.name];
 
       if (
@@ -182,100 +203,130 @@ const DynamicForm: React.FC = () => {
             className="px-8 pt-6 pb-8 space-y-5 text-slate-900"
           >
             {/* Dynamically render each field based on schema */}
-            {schema.fields.map((field: any, index: number) => (
-              <div
-                key={field.name}
-                className="animate-slide-up"
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-                <form.Field name={field.name}>
-                  {(fieldApi) => {
-                    // Common props passed into all field components
-                    const commonProps = {
-                      label: field.label,
-                      required: field.validations?.required,
-                      error:
-                        fieldApi.state.meta.errors?.[0] ||
-                        submitErrors[field.name] ||
-                        "",
-                      value: fieldApi.state.value,
-                      onChange: fieldApi.handleChange,
-                      placeholder: field.placeholder,
-                      validations: field.validations,
-                      fieldName: field.name,
-                      clearError: () =>
-                        setSubmitErrors((prev) => ({
-                          ...prev,
-                          [field.name]: "",
-                        })),
-                    };
+            {(schema as FormSchema).fields.map(
+              (field: FormField, index: number) => (
+                <div
+                  key={field.name}
+                  className="animate-slide-up"
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                >
+                  <form.Field name={field.name}>
+                    {(fieldApi) => {
+                      const commonProps: any = {
+                        label: field.label,
+                        required: field.validations?.required,
+                        error:
+                          fieldApi.state.meta.errors?.[0] ||
+                          submitErrors[field.name] ||
+                          "",
+                        placeholder: field.placeholder,
+                        validations: field.validations,
+                        clearError: () =>
+                          setSubmitErrors((prev) => ({
+                            ...prev,
+                            [field.name]: "",
+                          })),
+                      };
 
-                    // Decide which field component to render
-                    switch (field.type) {
-                      case "text":
-                        return <TextField {...commonProps} />;
+                      // Decide which field component to render
+                      switch (field.type) {
+                        case "text":
+                          return (
+                            <TextField
+                              {...commonProps}
+                              value={String(fieldApi.state.value ?? "")}
+                              onChange={fieldApi.handleChange}
+                            />
+                          );
 
-                      case "number":
-                        return (
-                          <NumberField
-                            {...commonProps}
-                            onChange={(val: number) =>
-                              fieldApi.handleChange(Number(val))
-                            }
-                          />
-                        );
+                        case "number":
+                          return (
+                            <NumberField
+                              {...commonProps}
+                              value={
+                                typeof fieldApi.state.value === "number"
+                                  ? fieldApi.state.value
+                                  : undefined
+                              }
+                              onChange={(val: number) =>
+                                fieldApi.handleChange(Number(val))
+                              }
+                            />
+                          );
 
-                      case "select":
-                        return (
-                          <SelectField
-                            {...commonProps}
-                            value={fieldApi.state.value ?? ""}
-                            options={field.options || []}
-                          />
-                        );
+                        case "select":
+                          return (
+                            <SelectField
+                              {...commonProps}
+                              value={String(fieldApi.state.value ?? "")}
+                              onChange={fieldApi.handleChange}
+                              options={field.options || []}
+                            />
+                          );
 
-                      case "multi-select":
-                        return (
-                          <MultiSelectField
-                            {...commonProps}
-                            value={
-                              Array.isArray(fieldApi.state.value)
-                                ? fieldApi.state.value
-                                : []
-                            }
-                            options={field.options || []}
-                          />
-                        );
+                        case "multi-select":
+                          return (
+                            <MultiSelectField
+                              {...commonProps}
+                              value={
+                                Array.isArray(fieldApi.state.value)
+                                  ? fieldApi.state.value
+                                  : []
+                              }
+                              options={field.options || []}
+                            />
+                          );
 
-                      case "date":
-                        return (
-                          <DateField
-                            {...commonProps}
-                            value={fieldApi.state.value ?? ""}
-                          />
-                        );
+                        case "date":
+                          return (
+                            <DateField
+                              label={field.label}
+                              required={field.validations?.required}
+                              error={
+                                fieldApi.state.meta.errors?.[0] ||
+                                submitErrors[field.name] ||
+                                ""
+                              }
+                              placeholder={field.placeholder}
+                              // clearError={() =>
+                              //   setSubmitErrors((prev) => ({
+                              //     ...prev,
+                              //     [field.name]: "",
+                              //   }))
+                              // }
+                              value={String(fieldApi.state.value ?? "")}
+                              onChange={fieldApi.handleChange}
+                            />
+                          );
 
-                      case "textarea":
-                        return <TextareaField {...commonProps} />;
+                        case "textarea":
+                          return (
+                            <TextareaField
+                              {...commonProps}
+                              value={String(fieldApi.state.value ?? "")}
+                              onChange={fieldApi.handleChange}
+                            />
+                          );
 
-                      case "switch":
-                        return (
-                          <SwitchField
-                            {...commonProps}
-                            value={!!fieldApi.state.value}
-                            onChange={(val: boolean) =>
-                              fieldApi.handleChange(val)
-                            }
-                          />
-                        );
+                        case "switch":
+                          return (
+                            <SwitchField
+                              {...commonProps}
+                              value={Boolean(fieldApi.state.value)}
+                              onChange={(val: boolean) =>
+                                fieldApi.handleChange(val)
+                              }
+                            />
+                          );
 
-                      default:
-                        return null;
-                    }
-                  }}
-                </form.Field>
-              </div>
-            ))}
+                        default:
+                          return null;
+                      }
+                    }}
+                  </form.Field>
+                </div>
+              ),
+            )}
 
             {/* Submit button */}
             <div className="pt-4">
@@ -292,7 +343,11 @@ const DynamicForm: React.FC = () => {
             {createSubmission.isError && (
               <div className="mt-3 bg-red-50 border-l-4 border-red-500 p-3 rounded-md">
                 <p className="text-red-700 text-sm font-medium">
-                  {(createSubmission.error as any)?.response?.data?.message ??
+                  {(
+                    createSubmission.error as {
+                      response?: { data?: { message?: string } };
+                    }
+                  )?.response?.data?.message ||
                     "Submission failed. Please try again."}
                 </p>
               </div>

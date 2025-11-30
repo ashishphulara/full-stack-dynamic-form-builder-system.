@@ -19,7 +19,7 @@ interface SubmissionsResponse {
 export const useSubmissionsQuery = (
   page: number,
   limit: number,
-  sortOrder: "asc" | "desc"
+  sortOrder: "asc" | "desc",
 ) =>
   useQuery<SubmissionsResponse>({
     queryKey: ["submissions", { page, limit, sortOrder }],
@@ -29,7 +29,7 @@ export const useSubmissionsQuery = (
       });
       return res.data;
     },
-    keepPreviousData: true,
+    // keepPreviousData: true,
   });
 
 export const useCreateSubmissionMutation = () => {

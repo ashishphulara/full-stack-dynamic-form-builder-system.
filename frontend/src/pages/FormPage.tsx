@@ -1,4 +1,3 @@
-import React from "react";
 import DynamicForm from "../components/form/DynamicForm";
 
 const FormPage = () => {
