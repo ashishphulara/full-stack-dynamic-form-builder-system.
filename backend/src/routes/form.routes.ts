@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getFormSchema } from "../controllers/form.controller";
+import { getFormSchema } from "../controllers/form.controller.js";
 
 const router = Router();
 

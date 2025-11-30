@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   getSubmissionsHandler,
   postSubmission,
-} from "../controllers/submission.controller";
+} from "../controllers/submission.controller.js";
 
 const router = Router();
 
