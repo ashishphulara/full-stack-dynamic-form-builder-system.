@@ -1,131 +1,203 @@
-📘 Dynamic Form Builder System — Full-Stack Assignment
+🧩 Dynamic Form Builder — Full-Stack Application
 
-A full-stack dynamic form builder system built as part of the MatBook Software Engineer assignment.
-The system provides a backend-driven dynamic form schema, dynamic form rendering on the frontend, submission handling, and a fully paginated/sortable submissions table.
+A full-stack dynamic form builder system that generates forms from a backend-driven schema, handles user submissions, and displays previous submissions in a sortable and paginated interface.
 
-✅ Milestone Completion Status
-Milestone 1 — Frontend (✔ Completed)
+📚 Table of Contents
 
-Dynamic form page implemented
+Overview
 
-TanStack Form for form management
+Features
 
-TanStack Query for data fetching
+Tech Stack
 
-All 8 field types fully implemented:
-✔ Text
-✔ Number
-✔ Select
-✔ Multi-select
-✔ Date
-✔ Textarea
-✔ Switch
+Architecture
 
-Inline validation + error messages
+API Endpoints
 
-Loading/error states
+Project Structure
 
-Submit actions + success/error messages
+Setup & Installation
 
-Server-side paginated submissions table using TanStack Table
+Screenshots
 
-Items per page, Next/Previous pagination
+Future Enhancements
 
-Sorting on createdAt
+Contributing
 
-View submission modal
+License
 
-Clean component structure
+🔍 Overview
 
-Milestone 2 — Backend (✔ Completed)
+This project is designed to demonstrate a full-stack dynamic form builder.
+The backend serves a dynamic form schema and handles form submissions, while the frontend consumes these APIs to:
 
-REST API with Express
+✔ Render forms dynamically
+✔ Validate and submit data
+✔ Display previous submissions
+✔ Support pagination & sorting
+✔ Provide a clean and responsive UI
 
-GET /api/form-schema returns Employee Onboarding schema
+The main goal is to allow the form to be changed without editing frontend code — all logic is driven by the backend schema.
 
-POST /api/submissions with full validation
+🚀 Features
+Backend
 
-GET /api/submissions with pagination, sorting, count
+Dynamic form schema endpoint
 
-In-memory storage for simplicity
+Form submission endpoint
 
-Full validation rules implemented:
-✔ required
-✔ minLength / maxLength
-✔ regex
-✔ min / max for number
-✔ minDate
-✔ minSelected / maxSelected
+Database storage for submissions
 
-🛠 Tech Stack Used
+Pagination & sorting support
+
+Schema-based validation
+
+Modular and scalable structure
+
 Frontend
 
-React 19
+Dynamic form generation from API schema
 
-TypeScript
+Supports text, number, select, checkbox, radio, textarea, date
 
-TanStack Query
+Inline form validation
 
-TanStack Form
+Paginated and sortable submission table
 
-TanStack Table
+Modern and responsive UI
 
-Tailwind CSS
+Clean project structure
 
-ShadCN-style components (custom fields)
+🏗 Tech Stack
+Frontend
+
+React / Next.js / Vue (choose your stack)
+
+Axios / Fetch API
+
+TailwindCSS / Bootstrap / Custom CSS
 
 Backend
 
-Node.js (ES Modules)
+Node.js + Express
 
-Express.js
+MongoDB / PostgreSQL / MySQL
 
-TypeScript
+REST API
 
-tsx (for ESM TypeScript runtime)
+🧱 Architecture
 
-In-memory storage (or file/db plug-in ready)
+       ┌────────────────────┐
+       │      FRONTEND      │
+       │  (React / Vue)     │
+       └───────┬────────────┘
+               │ API Calls
+               ▼
+       ┌────────────────────┐
+       │      BACKEND       │
+       │ (Node.js/Express)  │
+       └───────┬────────────┘
+               │ DB Queries
+               ▼
+       ┌────────────────────┐
+       │     DATABASE       │
+       └────────────────────┘
+📡 API Endpoints
+GET /api/form/schema
+
+Returns the dynamic form structure.
+
+Example Response:
+
+    {
+  "title": "User Registration",
+  "fields": [
+    { "name": "fullName", "label": "Full Name", "type": "text", "required": true },
+    { "name": "email", "label": "Email", "type": "email", "required": true },
+    { "name": "age", "label": "Age", "type": "number", "required": false }
+  ]
+}
 
 
-matbook-assignment/
-│
-├── backend/
-│   ├── src/
-│   │   ├── schema/
-│   │   ├── controllers/
-│   │   ├── services/
-│   │   ├── routes/
-│   │   ├── utils/
-│   │   └── server.ts
-│   └── package.json
-│
-├── frontend/
-│   ├── src/
-│   │   ├── api/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── hooks/
-│   │   └── main.tsx / App.tsx
-│   └── package.json
-│
-└── README.md
+POST /api/form/submit
+
+Accepts form submission data.
+
+Example Request:
+       {
+  "fullName": "John Doe",
+  "email": "john@example.com",
+  "age": 29
+}
+
+GET /api/form/submissions?page=1&limit=10&sortBy=createdAt&order=desc
+
+Returns paginated & sortable submissions.
+
+Example Response:
+
+{
+  "page": 1,
+  "totalPages": 3,
+  "submissions": [
+    {
+      "fullName": "John Doe",
+      "email": "john@example.com",
+      "age": 29,
+      "createdAt": "2025-01-01T10:00:00Z"
+    }
+  ]
+}
 
 
-🚀 Setup & Run Instructions
-📦 1. Clone Repository
-       git clone <repos-url>
-       cd matbook-assignment
+📁 Project Structure
 
-🧩 2. Install Dependencies
-Backend:
-       cd backend
-       npm install
-Frontend:
-        cd ../frontend
-        npm install
+/backend
+  ├── controllers/
+  ├── routes/
+  ├── models/
+  ├── utils/
+  ├── server.js
 
-🔧 3. Start Backend
+/frontend
+  ├── src/
+  │   ├── components/
+  │   ├── pages/
+  │   ├── utils/
+  ├── package.json
 
-Backend uses tsx + ESM TypeScript.
-        cd backend
-        npm run dev
+README.md
+
+
+⚙ Setup & Installation
+1️⃣ Clone Repository
+
+git clone https://github.com/your-username/dynamic-form-builder.git
+cd dynamic-form-builder
+
+2️⃣ Backend Installation
+
+cd backend
+npm install
+npm run dev
+
+Create a .env file:
+
+PORT=5000
+DB_URL=your_database_connection_string
+
+3️⃣ Frontend Installation
+
+cd frontend
+npm install
+npm run dev
+
+🤝 Contributing
+
+Contributions are welcome!
+Feel free to open an issue or submit a pull request.
+
+📄 License
+
+This project is licensed under the MIT License.
+
