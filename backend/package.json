@@ -8,13 +8,16 @@
     "build": "tsc"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^5.1.0",
-    "cors": "^2.8.5"
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.9.3",
-    "@types/node": "^24.10.1",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
-    "tsx": "^4.7.0"
+    "@types/node": "^24.10.1",
+    "@types/uuid": "^10.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.9.3"
   }
 }
