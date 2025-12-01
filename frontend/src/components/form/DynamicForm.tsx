@@ -89,8 +89,7 @@ const DynamicForm: React.FC = () => {
               className="w-8 h-8 text-red-500"
               fill="none"
               stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+              viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -182,8 +181,7 @@ const DynamicForm: React.FC = () => {
                 className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+                viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -200,16 +198,14 @@ const DynamicForm: React.FC = () => {
           {/* Actual form body */}
           <form
             onSubmit={handleFormSubmit}
-            className="px-8 pt-6 pb-8 space-y-5 text-slate-900"
-          >
+            className="px-8 pt-6 pb-8 space-y-5 text-slate-900">
             {/* Dynamically render each field based on schema */}
             {(schema as FormSchema).fields.map(
               (field: FormField, index: number) => (
                 <div
                   key={field.name}
                   className="animate-slide-up"
-                  style={{ animationDelay: `${index * 0.05}s` }}
-                >
+                  style={{ animationDelay: `${index * 0.05}s` }}>
                   <form.Field name={field.name}>
                     {(fieldApi) => {
                       const commonProps: any = {
@@ -273,6 +269,7 @@ const DynamicForm: React.FC = () => {
                                   ? fieldApi.state.value
                                   : []
                               }
+                              onChange={fieldApi.handleChange}
                               options={field.options || []}
                             />
                           );
@@ -325,7 +322,7 @@ const DynamicForm: React.FC = () => {
                     }}
                   </form.Field>
                 </div>
-              ),
+              )
             )}
 
             {/* Submit button */}
@@ -333,8 +330,7 @@ const DynamicForm: React.FC = () => {
               <button
                 type="submit"
                 disabled={createSubmission.isPending}
-                className="w-full h-12 rounded-md bg-[#f39b5c] hover:bg-[#e88b48] text-white font-semibold text-sm tracking-wide shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
-              >
+                className="w-full h-12 rounded-md bg-[#f39b5c] hover:bg-[#e88b48] text-white font-semibold text-sm tracking-wide shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed">
                 {createSubmission.isPending ? "Submitting..." : "REGISTER NOW"}
               </button>
             </div>
